@@ -1,0 +1,176 @@
+table.shopping-cart {
+	width: 100%;
+	border-spacing: 0px
+}
+
+table.shopping-cart thead {
+	background-color: #DDD;
+}
+
+table.shopping-cart tbody {
+	background-color: #F5F5F5;
+	text-align: center;
+}
+
+table.shopping-cart th {
+	height: 40px;
+}
+
+
+/*表格每个标题的宽度*/
+
+table.shopping-cart th:nth-child(1) {
+	width: 40px;
+}
+
+table.shopping-cart th:nth-child(2) {
+	/*width: 200px;*/
+}
+
+table.shopping-cart th:nth-child(3) {
+	width: 150px;
+}
+
+table.shopping-cart th:nth-child(4) {
+	/*width: 200px;*/
+}
+
+table.shopping-cart th:nth-child(5) {
+	width: 150px;
+}
+
+table.shopping-cart th:nth-child(6) {
+	/*width: 200px;*/
+}
+
+table.shopping-cart tbody tr:hover {
+	background-color: #EAEAEA;
+}
+
+table.shopping-cart tbody td {
+	border-top: solid 1px #DDD;
+}
+
+table.shopping-cart div.book-name {
+	line-height: 80px;
+	font-size: 18px;
+	font-weight: bold;
+	/*color: #EA5151;*/
+	float: left;
+}
+
+div.controller-page {
+	line-height: 40px;
+	height: 40px;
+	padding-left: 12px;
+	/*width: 100%;*/
+	background-color: #DDD;
+}
+
+button.settlement {
+	height: 40px;
+	width: 100px;
+	float: right;
+	color: #FFF;
+	background-color: #EA5151;
+	border-color: #EA5151;
+}
+
+button.settlement:active {
+	background-color: #F00;
+	border-color: #F00;
+}
+
+img.shopping-cart-book-img {
+	width: 60px;
+	height: 80px;
+	float: left;
+}
+
+div.total-price {
+	line-height: 40px;
+	width: 130px;
+	color: #EA5151;
+	float: right;
+	font-weight: bold;
+	/*加粗*/
+	font-size: 22px;
+}
+
+a.bookName {
+	color: #555555;
+	display: block;
+	font-size: 18px;
+	text-decoration: none;
+}
+
+a.bookName:hover {
+	text-decoration: underline;
+	color: #FF4400;
+}
+
+div.select-address-page {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-left: -400px;
+	margin-top: -250px;
+	max-height: 500px;
+	width: 800px;
+	text-align: center;
+	background-color: #FFFFFF;
+	border-radius: 5px;
+	padding-bottom: 15px;
+}
+div.address-list{
+	width: 760px;
+	margin-left: 20px;
+}
+div.address-list-head {
+	height: 40px;
+	width: 100%;
+	line-height: 40px;
+	background-color: #DDD;
+	font-weight: bold;
+}
+
+div.address-list-body {}
+
+div.address-list-item {
+	height: 60px;
+	width: 100%;
+	line-height: 60px;
+	background-color: #F5F5F5;
+    border-top: solid 1px #DDD;
+    transition: all 400ms;
+}
+
+div.address-list-item:hover {
+	background-color: #EAEAEA;
+}
+
+div.address-list-col {
+	float: left;
+	padding-left: 10px;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+div.address-list-col button {
+	margin-top: 15px;
+}
+div.address-list-col:nth-child(1) {
+	width: 90px;
+}
+
+div.address-list-col:nth-child(2) {
+	width: 110px;
+}
+
+div.address-list-col:nth-child(3) {
+	width: 410px;
+}
+div.address-list-col:nth-child(4) {
+	width: 100px;
+}

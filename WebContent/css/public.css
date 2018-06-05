@@ -1,0 +1,291 @@
+/*滚动条样式*/
+
+::-webkit-scrollbar-thumb {
+	min-height: 50px;
+	min-width: 150px;
+	background: rgb(207, 207, 207);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-track-piece {
+	background-color: rgb(244, 244, 244);
+	margin: 0;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 6px;
+}
+
+* {
+	color: #555555;
+}
+
+body {
+	margin: auto;
+	margin-top: 70px;
+	width: 1000px;
+	overflow-y: scroll;
+	background-color: #F4F5F7;
+}
+
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+button {
+	background-color: #FFFFFF;
+	border: #00C1DE solid 1px;
+	color: #00C1DE;
+	font-size: 14px;
+	outline: none;
+	padding: 4px 10px;
+	transition: all 400ms;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+button:hover {
+	cursor: pointer;
+	color: #FFFFFF;
+	background-color: #00C1DE;
+}
+
+input[type="submit"]:active,
+input[type="reset"]:active,
+button:active {
+	background-color: #00B7D3;
+	border-color: #00B7D3;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+	width: 200px;
+	height: 36px;
+	padding-left: 10px;
+	font-size: 16px;
+	outline: none;
+	border: #CCCCCC solid 1px;
+	transition: all 400ms;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus {
+	border-color: #00B7D3;
+}
+
+a{
+	color: #00C1DE;
+}
+a:hover{
+	color: #00B7D3
+}
+
+/*导航栏*/
+
+.nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 60px;
+	background-color: #FFF;
+	z-index: 99;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.11);
+	font-size: 14px;
+}
+
+.nav-main {
+	margin: 0 auto;
+	width: 1000px;
+}
+
+.nav-main-page {
+	min-width: 20px;
+	background-color: #FFFFFF;
+	height: 60px;
+	line-height: 60px;
+	float: left;
+	display: block;
+}
+
+.nav-main-page img {
+	height: 50px;
+	margin-top: 5px;
+	display: block;
+	float: left;
+}
+
+.nav-main-page img.photo {
+	height: 36px;
+	margin-top: 12px;
+	display: block;
+	float: left;
+	border-radius: 18px;
+}
+
+.nav-main-page a {
+	color: #555555;
+	height: 60px;
+	line-height: 60px;
+	display: block;
+	padding-left: 16px;
+	padding-right: 16px;
+	text-decoration: none;
+	float: left;
+	border-bottom: #0000 solid 3px;
+	transition: all 400ms;
+}
+
+.nav-main-page a:hover {
+	height: 57px;
+	border-bottom: #00C1DE solid 3px;
+	color: #00C1DE
+}
+
+.nav-main-page div.button {
+	max-width: 400px;
+	overflow: hidden;
+	height: 60px;
+	line-height: 60px;
+	display: block;
+	padding-left: 16px;
+	padding-right: 16px;
+	color: #555555;
+	text-decoration: none;
+	float: right;
+	transition: all 400ms;
+}
+
+.nav-main-page div.button:hover {
+	cursor: pointer;
+	color: #FFFFFF;
+	background-color: #00C1DE;
+}
+
+.nav-main-page div.button:active {
+	background-color: #00B7D3
+}
+
+
+/*消息提示框*/
+
+div.messagebox {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-left: -240px;
+	margin-top: -70px;
+	width: 440px;
+	min-height: 140px;
+	padding-bottom: 25px;
+	background-color: #FFFFFF;
+	border-radius: 5px;
+	padding: 20px;
+}
+
+div.messagebox div.message-title {
+	font-size: 16px;
+}
+
+div.messagebox div.message-context {
+	font-size: 14px;
+	margin-top: 16px;
+	margin-bottom: 10px;
+	min-height: 70px;
+}
+
+div.messagebox button {
+	padding: 4px 12px;
+	float: right;
+	margin-left: 20px;
+}
+
+
+/*窗口黑色半透明遮罩*/
+
+div.mask {
+	position: fixed;
+	z-index: 199;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.38);
+}
+
+
+/*数字按钮*/
+
+div.button-number-box {
+	width: 150px;
+	height: 30px;
+	border: solid 1px #CCC;
+	text-align: center;
+	background-color: #FFF;
+}
+
+button.button-number-box-button {
+	width: 50px;
+	height: 30px;
+	font-size: 28px;
+	line-height: 30px;
+	color: #555555;
+	float: left;
+	border: none;
+	padding: 0px;
+}
+
+button.button-number-box-button:hover {
+	color: #FFFFFF;
+	background-color: #00C1DE;
+	cursor: pointer;
+}
+
+div.button-number-box-number {
+	width: 48px;
+	border-left: solid 1px #CCC;
+	border-right: solid 1px #CCC;
+	font-size: 18px;
+	line-height: 30px;
+	float: left;
+}
+
+
+/*购买按钮*/
+
+button.purchase {
+	min-width: 150px;
+	height: 40px;
+	font-size: 18px;
+}
+
+
+/*通用页面样式*/
+
+.page {
+	width: 980px;
+	min-height: 140px;
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #FFFFFF;
+	border-radius: 10px;
+}
+
+.page h2.page-title {
+	margin-top: 10px;
+	display: inline-block;
+}
+.page button.page-title-button {
+	float: right;
+	margin-top: 8px;
+	height: 35px;
+}
+.price {
+	font-size: 18px;
+	font-weight: bold;
+	/*加粗*/
+	color: #EA5151;
+}

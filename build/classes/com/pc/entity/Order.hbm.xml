@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="com.pc.entity">
+    <class name="Order" table="orderform">
+        <id name="orderNO" column="orderNO" type="int">
+        	<generator class="increment"/>
+        </id>
+        <property name="logname" column="logname" type="string"/>
+        <property name="orderDate" column="orderDate" type="timestamp"/>
+        <property name="sum" column="sum" type="float"/>
+        <property name="orderStatus" column="orderStatus" type="string"/>
+        <property name="receiver" column="receiver" type="string"/>
+        <property name="address" column="address" type="string"/>
+        <property name="phone" column="phone" type="string"/>
+        <property name="postcode" column="postcode" type="string"/>
+        <list name="orderItemList" table="orderitem" cascade="all" lazy="false"><!-- lazy默认值为proxy，表示代理，也就是开启懒加载 -->
+        	<key column="orderNO"/>
+        	<list-index column="idx"/>
+        	<one-to-many class="com.pc.entity.OrderItem"/>
+        </list>
+    </class>
+</hibernate-mapping>

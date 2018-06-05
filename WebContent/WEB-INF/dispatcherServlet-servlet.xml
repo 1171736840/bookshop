@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans classpath:spring-beans-4.3.xsd
+       http://www.springframework.org/schema/mvc classpath:spring-mvc-4.3.xsd
+       http://www.springframework.org/schema/context classpath:spring-context-4.3.xsd">
+
+	<!-- <context:annotation-config /> -->
+	<!-- 把标记了@Controller注解的类转换为bean -->
+	<context:component-scan base-package="com.pc.controller" />
+	
+	<!-- 启动Spring MVC的注解功能，完成请求和注解Controller类及对应方法method的映射 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+
+	<!-- 调用处理器Controller的相应方法method -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 处理JSON数据转换 -->
+	<bean id="jsonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+
+	<!-- 对模型视图名称的解析，为模型视图名称添加前后缀 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/page/" p:suffix=".jsp" />
+	
+	<!-- 处理文件上传的组件 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 上传文件大小上限，单位为字节（250MB） -->
+		<property name="maxUploadSize">
+			<value>262144000</value>
+		</property>
+		<!-- 请求的编码格式，必须和jsp的pageEncoding属性一致，以便正确读取表单的内容，默认为ISO-8859-1 -->
+		<property name="defaultEncoding">
+			<value>utf-8</value>
+		</property>
+	</bean>
+	
+	<!-- 上传文件过大异常处理，以下方法只在apache-tomcat-7.0.39这个版本中有用，其它版本中不起作用 -->
+	<!-- 在文件上传解析时发现异常，此时还没有进入到Controller方法中 -->
+	<!-- <bean id="exceptionResolver" class= "org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props> -->
+				<!-- 遇到MaxUploadSizeExceededException异常时，跳转到指定页面 -->
+	<!-- 			<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">maxUploadSizeExceeded</prop>
+			</props>
+		</property>
+	</bean> -->
+	
+	<!-- 解决方案1：让应用服务器的默认Servlet处理静态资源 -->
+	<!-- <mvc:default-servlet-handler /> -->
+	<!-- 解决方案2：静态资源仍由SpringMVC框架处理，以下指明哪些请求被处理为静态资源 -->
+	<mvc:resources mapping="/css/**" location="/css/"/>
+	<mvc:resources mapping="/img/**" location="/img/"/>
+	<mvc:resources mapping="/js/**" location="/js/"/>
+</beans>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		
+		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+		<property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=bookshop</property>
+		<property name="hibernate.connection.username">sa</property>
+		<property name="hibernate.connection.password">123</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.SQLServer2012Dialect</property>
+		
+		<property name="hibernate.c3p0.max_size">30</property>
+		<property name="hibernate.c3p0.min_size">5</property>
+		<property name="hibernate.c3p0.checkoutTimeout">1000</property><!-- session从连接池中获取connection的最大等待时间1000毫秒 -->
+		<property name="hibernate.c3p0.max_statements">50</property>
+		<property name="hibernate.c3p0.timeout">3600</property><!-- 当一个connection空闲时间超过3600秒（即1小时），则该connection被关闭 -->
+		
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		
+		<mapping resource="com/pc/entity/Address.hbm.xml"/>
+		<mapping resource="com/pc/entity/Book.hbm.xml"/>
+		<mapping resource="com/pc/entity/BookComment.hbm.xml"/>
+		<mapping resource="com/pc/entity/Order.hbm.xml"/>
+		<mapping resource="com/pc/entity/OrderItem.hbm.xml"/>
+		<mapping resource="com/pc/entity/User.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

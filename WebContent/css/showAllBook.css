@@ -1,0 +1,100 @@
+.min-page {
+	width: 220.5px;
+	border: solid 1px #FFF;
+	min-height: 140px;
+	margin-top: 10px;
+	margin-right: 10px;
+	padding: 10px;
+	background-color: #FFFFFF;
+	border-radius: 10px;
+	float: left;
+}
+
+.min-page:hover {
+	/*box-shadow: 0px 0px 15px #00C1DE;*/
+	border: solid 1px #00C1DE;
+}
+
+.min-page:nth-child(4n) {
+	/*每一行的最后一个应用这个样式（4的倍数）*/
+	margin-right: 0px;
+}
+
+.min-page:nth-child(-n+4) {
+	/*前四个应用这个样式*/
+	margin-top: 0px;
+}
+
+div.min-page-photo {
+	text-align: center;
+}
+
+.min-page a.bookPublish {
+	font-size: 12px;
+	color: #888;
+	float: left;
+	padding-top: 4px;
+	width: 110px;
+	overflow: hidden;
+	/*超出部分不显示*/
+	white-space: nowrap;
+	/*强制不换行*/
+	text-overflow: ellipsis;
+	/*多余内容用省略号显示*/
+}
+
+.min-page a.bookPublish:hover {
+	color: #FF4400;
+}
+
+.min-page a.bookAuthor {
+	text-align: right;
+	font-size: 12px;
+	color: #888;
+	float: right;
+	padding-top: 4px;
+	width: 110px;
+	overflow: hidden;
+	/*超出部分不显示*/
+	white-space: nowrap;
+	/*强制不换行*/
+	text-overflow: ellipsis;
+	/*多余内容用省略号显示*/
+}
+
+.min-page a.bookAuthor:hover {
+	color: #FF4400;
+}
+
+#loading {
+	text-align: center;
+	overflow: hidden;
+	margin-top: 10px;
+}
+
+.min-page img.book-photo {
+	max-width: 100%;
+	height: 220px;
+}
+
+a.bookName {
+	color: #555555;
+	display: block;
+	font-size: 18px;
+	text-decoration: none;
+	overflow: hidden;
+	/*超出部分不显示*/
+	white-space: nowrap;
+	/*强制不换行*/
+	text-overflow: ellipsis;
+	/*多余内容用省略号显示*/
+}
+
+a.bookName:hover {
+	text-decoration: underline;
+	color: #FF4400;
+}
+
+.red {
+	color: #F00;
+}

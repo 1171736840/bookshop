@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="com.pc.entity">
+    <class name="Book" table="bookform">
+        <id name="bookISBN" column="bookISBN" type="string"/>
+        <property name="bookPic" column="bookPic" type="string"/>
+        <property name="bookName" column="bookName" type="string"/>
+        <property name="bookAuthor" column="bookAuthor" type="string"/>
+        <property name="bookPrice" column="bookPrice" type="float"/>
+        <property name="bookPublish" column="bookPublish" type="string"/>
+        <property name="bookAbstract" column="bookAbstract" type="text"/>
+    </class>
+</hibernate-mapping>

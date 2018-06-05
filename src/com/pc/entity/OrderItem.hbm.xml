@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="com.pc.entity">
+    <class name="OrderItem" table="orderitem">
+        <id name="itemNO" column="itemNO" type="long">
+        	<generator class="increment"/>
+        </id>
+        <many-to-one name="order" column="orderNO" class="com.pc.entity.Order" />
+        <many-to-one name="book" column="bookISBN" class="com.pc.entity.Book" unique="true" lazy="false" /><!-- lazy默认值为proxy，表示代理，也就是开启懒加载 -->
+        <property name="bookPrice" column="bookPrice" type="float"/>
+        <property name="count" column="count" type="int"/>
+        <property name="commentStatus" column="commentStatus" type="boolean"/>
+    </class>
+</hibernate-mapping>

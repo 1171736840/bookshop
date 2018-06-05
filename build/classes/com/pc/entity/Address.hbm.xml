@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="com.pc.entity">
+    <class name="Address" table="addressform">
+        <id name="addrNO" column="addrNO" type="long">
+        	<generator class="increment"/>
+        </id>
+        <many-to-one name="user" column="logname" class="com.pc.entity.User"/>
+        <property name="receiver" column="receiver" type="string"/><!-- 收货人 -->
+        <property name="receivingAddress" column="receivingAddress" type="string"/><!-- 收货地址 -->
+        <property name="phone" column="phone" type="string"/>
+        <property name="postcode" column="postcode" type="string"/><!-- 邮编 -->
+    </class>
+</hibernate-mapping>

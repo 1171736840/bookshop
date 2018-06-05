@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>bookshop</display-name>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/dispatcherServlet-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 这里定义一个自定义过滤器，在需要用户才能访问的页面给过滤出来，检查并提醒用户登录 -->
+	<filter>
+		<filter-name>userFilter</filter-name>
+		<filter-class>com.pc.filter.Userfilter</filter-class>
+		<init-param>
+			<param-name>exclude</param-name><!-- 要过滤的地址 -->
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<param-name>excludeFolder</param-name><!-- 要过滤的目录 -->
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<param-name>HTMLFolder</param-name><!-- 要返回HTML的目录，默认为json -->
+			<param-value>/jsp</param-value>
+		</init-param>
+	</filter>
+	<!-- 指定哪些请求经过过滤器 -->
+	<filter-mapping>
+		<filter-name>userFilter</filter-name>
+		<url-pattern>/addShoppingCart</url-pattern><!-- 添加到购物车 -->
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>userFilter</filter-name>
+		<url-pattern>/logout</url-pattern><!-- 退出登录 -->
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>userFilter</filter-name>
+		<url-pattern>/address/*</url-pattern><!-- 收货地址相关操作 -->
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>userFilter</filter-name>
+		<url-pattern>/jsp/myAddress</url-pattern><!-- 收货地址页面 -->
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>userFilter</filter-name>
+		<url-pattern>/order/*</url-pattern><!-- 订单相关操作 -->
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>userFilter</filter-name>
+		<url-pattern>/jsp/myOrder</url-pattern><!-- 我的订单页面 -->
+	</filter-mapping>
+  
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans classpath:spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context classpath:spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop classpath:spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx classpath:spring-tx-4.3.xsd"
+	default-autowire="byName" default-lazy-init="false">
+	
+	<!-- 引用@Autowired注入工具类 --> 
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    
+<!-- 配置sessionFactory  第一种方式  -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    	<property name="configLocation">
+	        <value>classpath:hibernate.cfg.xml</value>
+	    </property>
+	</bean>
+	
+<!-- 配置sessionFactory  第二种方式  -->
+	<!-- 第1步，加载配置文件 -->
+<!--    <context:property-placeholder location="classpath:jdbc.properties"
+        file-encoding="utf-8" ignore-unresolvable="true"/> -->
+	
+	<!-- 第2步，配置sessionFactory -->
+<!-- 	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	    <property name="dataSource" ref="dataSource"/>
+	    <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+            </props>
+        </property>
+	    <property name="mappingDirectoryLocations">
+            <list>
+                <value>classpath:com/pc/entity/</value>
+            </list>
+        </property>
+	    <property name="packagesToScan">
+	        <list>
+	            <value>com.pc.entity</value>
+	        </list>
+	    </property>
+	</bean> -->
+	
+	<!-- 第3步，配置数据源dataSource -->
+<!--     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close" p:driverClass="${jdbc.driverClassName}"
+        p:jdbcUrl="${jdbc.url}" p:user="${jdbc.username}" p:password="${jdbc.password}"
+        p:initialPoolSize="${jdbc.c3p0.initialPoolSize}" p:minPoolSize="${jdbc.c3p0.minPoolSize}"
+        p:maxPoolSize="${jdbc.c3p0.maxPoolSize}" p:maxIdleTime="${jdbc.c3p0.maxIdleTime}"/> -->
+
+ 
+<!-- 事务配置 -->
+	<!-- 第1步， 配置事务管理器类（声明式的事务） -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	    <property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 第2步， 配置事务增强(拦截到方法后如何管理事务) -->
+	<tx:advice id="txadvice" transaction-manager="transactionManager">
+	    <tx:attributes>
+	        <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
+	        <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception" />
+	        <tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>
+	        <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+	    </tx:attributes>
+	</tx:advice>
+
+	<!-- 第3步， aop配置 -->
+	<aop:config>
+	    <aop:pointcut id="daoMethod" expression="execution(* com.pc.dao.*.*(..))"/>
+	    <aop:advisor pointcut-ref="daoMethod" advice-ref="txadvice"/>
+	</aop:config>
+
+<!-- 配置DAO -->
+	<!-- dao对象中的sessionFactory属性通过@Autowired注解方式来注入，无需配置如下<property> -->
+    <!-- <property name="sessionFactory" ref="sessionFactory"></property> -->
+	<bean id="userDao" class="com.pc.dao.UserDao">
+	</bean>
+	<bean id="bookfromDao" class="com.pc.dao.BookfromDao">
+	</bean>
+	<bean id="orderDao" class="com.pc.dao.OrderDao">
+	</bean>
+	<bean id="addressDao" class="com.pc.dao.AddressDao">
+	</bean>
+</beans>

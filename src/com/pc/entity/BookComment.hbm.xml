@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="com.pc.entity">
+    <class name="BookComment" table="bookcomment">
+        <id name="commentNO" column="commentNO" type="long">
+        	<generator class="increment"/>
+        </id>
+        <many-to-one name="book" column="bookISBN" class="com.pc.entity.Book"/>
+        <property name="logname" column="logname" type="string"/>
+        <property name="description" column="description" type="string"/>
+        <property name="commentDate" column="commentDate" type="timestamp"/>
+    </class>
+</hibernate-mapping>

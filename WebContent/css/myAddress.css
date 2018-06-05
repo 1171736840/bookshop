@@ -1,0 +1,101 @@
+div.address-list-head {
+	height: 40px;
+	width: 100%;
+	line-height: 40px;
+	background-color: #DDD;
+	font-weight: bold;
+}
+
+div.address-list-body {}
+
+div.address-list-item {
+	height: 60px;
+	width: 100%;
+	line-height: 60px;
+	background-color: #F5F5F5;
+    border-top: solid 1px #DDD;
+    transition: all 400ms;
+}
+
+div.address-list-item:hover {
+	background-color: #EAEAEA;
+}
+
+div.address-list-col {
+	float: left;
+	padding-left: 10px;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+div.address-list-col:nth-child(1) {
+	width: 80px;
+}
+
+div.address-list-col:nth-child(2) {
+	width: 130px;
+}
+
+div.address-list-col:nth-child(3) {
+	width: 100px;
+}
+
+div.address-list-col:nth-child(4) {
+	width: 500px;
+}
+
+div.address-list-col:nth-child(5) {
+	width: 120px;
+}
+
+div.address-list-col button {
+	margin: 13 10 0 0;
+}
+
+div.mask-Address-page {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -230px;
+    margin-top: -250px;
+    width: 460px;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    padding-bottom: 15px;
+}
+
+div.mask-Address-page div.mask-Address-page-item{
+	margin-bottom: 10px;
+}
+
+
+div.mask-Address-page span.page-title-min{
+	width: 70px;
+    display: inline-block;
+    text-align: left;
+}
+
+/*div.mask-Address-page select{
+	width: 150px;
+}*/
+
+div.mask-Address-page input[type=text],
+div.mask-Address-page select{
+	width: 280px;
+}
+div.mask-Address-page input[name=phone]{
+	/*width: 140px;*/
+}
+div.mask-Address-page input[name=postcode]{
+	/*width: 100px;*/
+}
+div.mask-Address-page input[name=receivingAddress]{
+	/*width: 400px;*/
+}
+
+div.mask-Address-page input[type=button]{
+	width: 360px;
+	height: 40px;
+}

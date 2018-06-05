@@ -1,0 +1,89 @@
+div.thead{
+	margin-top: 10px;
+}
+div.thead:first-child{
+	margin-top: 0px;
+}
+
+div.thead div.tr{
+	height: 40px;
+	width: 100%;
+	line-height: 40px;
+	background-color: #DDD;
+	font-weight: bold;
+}
+
+div.thead div.tr div.th{
+	float: left;
+    padding-left: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+div.thead div.tr div.th:nth-child(1){
+	width: 180px;
+}
+div.thead div.tr div.th:nth-child(2){
+	width: 80px;
+}
+div.thead div.tr div.th:nth-child(3){
+	width: 130px;
+}
+div.thead div.tr div.th:nth-child(4){
+	width: 450px;
+}
+div.thead div.tr div.th:nth-child(5){
+	padding-top: 6px;
+	width: 90px;
+}
+div.tbody div.tr{
+	height: 80px;
+    width: 100%;
+    line-height: 80px;
+    background-color: #F5F5F5;
+    border-top: solid 1px #DDD;
+    transition: all 400ms;
+}
+div.tbody div.tr:hover{
+	background-color: #EAEAEA;
+}
+div.tbody div.tr div.td{
+	float: left;
+    padding-left: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+div.tbody div.tr div.td:nth-child(1){
+	width: 60px;
+}
+div.tbody div.tr div.td:nth-child(2){
+	width: 400px;
+}
+div.tbody div.tr div.td:nth-child(3){
+	width: 60px;
+}
+div.tbody div.tr div.td:nth-child(4){
+	width: 60px;
+}
+div.tbody div.tr div.td:nth-child(5){
+	padding-top: 26px;
+	width: 90px;
+}
+
+div.tbody div.tr div.td img.book-pic{
+	width: 60px;
+    height: 80px;
+}
+div.tbody div.tr div.td a{
+	color: #555555;
+	display: block;
+	font-size: 18px;
+	text-decoration: none;
+}
+div.tbody div.tr div.td a:hover{
+	text-decoration: underline;
+	color: #FF4400;
+}
+
