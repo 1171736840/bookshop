@@ -9,7 +9,7 @@
 			<!--占位使用-->
 		</div>
 		<div class="nav-main-page">
-			<a href="${ctx}/" target="_blank">首页</a>
+			<!--<a href="${ctx}/" target="_blank">首页</a>-->
 			<a href="${ctx}/jsp/showAllBook" target="_blank">浏览图书</a>
 			<a href="${ctx}/jsp/shoppingCart" target="_blank">购物车</a>
 			<a href="${ctx}/jsp/myAddress" target="_blank">我的地址</a>

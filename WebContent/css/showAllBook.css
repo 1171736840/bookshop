@@ -8,6 +8,7 @@
 	background-color: #FFFFFF;
 	border-radius: 10px;
 	float: left;
+	transition: all 400ms;
 }
 
 .min-page:hover {

@@ -35,6 +35,16 @@
 
 			</div>
 		</div>
+		
+		
+		<div id="editCommentPageMask" class="mask" style="display: none;" onclick="noneMask()">
+			<div class="editCommentPage" onclick="stopPropagation(event)">
+				<h2>写评价</h2>
+				<textarea placeholder="在这里写下你的评价,最多120字。" maxlength="120" onchange="this.value=this.value.substring(0, 120)" onkeydown="this.onchange(this)" onkeyup="this.onchange(this)"></textarea>
+				<button onclick="submitComment()">提交评价</button>
+			</div>
+		</div>
+		
 	</body>
 
 </html>

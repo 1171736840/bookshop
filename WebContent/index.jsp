@@ -14,7 +14,9 @@
 
 	<body>
 		<%@ include file="/WEB-INF/page/include/nav.jsp" %>
-		<p class="center fz30">欢迎您的到来</p>
+		<script>
+			window.location.href = window.ctx + "/jsp/showAllBook";
+		</script>
 	</body>
 
 </html>

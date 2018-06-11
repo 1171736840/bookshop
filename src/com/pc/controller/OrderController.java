@@ -16,6 +16,7 @@ import com.pc.dao.BookfromDao;
 import com.pc.dao.OrderDao;
 import com.pc.entity.Address;
 import com.pc.entity.Book;
+import com.pc.entity.BookComment;
 import com.pc.entity.Order;
 import com.pc.entity.OrderItem;
 import com.pc.entity.User;
@@ -31,7 +32,7 @@ public class OrderController {
 	
 	@ResponseBody//解析出json
 	@RequestMapping(value="/order/createOrder",method=RequestMethod.POST)
-	public Object createOrder(String orderIds, String addressId, HttpSession session) {//结算商品
+	public Object createOrder(String orderIds, String addressId, HttpSession session) {//创建订单
 		Map<String, Object>json = new HashMap<>();
 		try {
 			//查找收货地址
@@ -100,7 +101,7 @@ public class OrderController {
 	
 	@ResponseBody//解析出json
 	@RequestMapping(value="/order/getAllOrder",method=RequestMethod.POST)
-	public Object getAllOrder(String orderIds, String addressId, HttpSession session) {//结算商品
+	public Object getAllOrder(String orderIds, String addressId, HttpSession session) {//获取所有订单
 		Map<String, Object>json = new HashMap<>();
 		User user = (User) session.getAttribute("user");
 		List<Order> orderList = orderDao.getAllOrder(user);
@@ -109,5 +110,64 @@ public class OrderController {
 		json.put("message", "获取所有订单成功！");
 		return json;
 	}
+	@ResponseBody//解析出json
+	@RequestMapping(value="/order/settlementOrder",method=RequestMethod.POST)
+	public Object settlementOrder(String orderNO, HttpSession session) {//结算订单
+		Map<String, Object>json = new HashMap<>();
+		try {
+			Order order = orderDao.getOrder(Integer.parseInt(orderNO));
+			order.setOrderStatus("已结算");
+			orderDao.updateOrder(order);
+			json.put("result", true);
+			json.put("message", "结算订单成功！");
+		} catch (Exception e) {
+			json.put("result", false);
+			json.put("message", "结算订单失败！");
+		}
+		return json;
+	}
 
+	@ResponseBody//解析出json
+	@RequestMapping(value="/order/submitBookComment",method=RequestMethod.POST)
+	public Object submitBookComment(String orderItemNO, String comment, HttpSession session) {//结算订单
+		Map<String, Object>json = new HashMap<>();
+		try {
+			OrderItem orderItem = orderDao.getOrderItem(Long.parseLong(orderItemNO));
+			orderItem.setCommentStatus(true);
+
+			User user = (User) session.getAttribute("user");
+			BookComment bookComment = new BookComment();
+			bookComment.setBook(orderItem.getBook());
+			bookComment.setCommentDate(new Date());
+			bookComment.setDescription(comment);
+			bookComment.setLogname(user.getLogname());
+			bookComment.setOrderItem(orderItem);
+			
+			orderDao.updateOrderItem(orderItem);
+			bookfromDao.addBookComment(bookComment);
+			
+			json.put("result", true);
+			json.put("message", "评价成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.put("result", false);
+			json.put("message", "评价失败！");
+		}
+		return json;
+	}
+	@ResponseBody//解析出json
+	@RequestMapping(value="/order/getBookComment",method=RequestMethod.POST)
+	public Object getBookComment(String orderItemNO) {//结算订单
+		Map<String, Object>json = new HashMap<>();
+		try {
+			json.put("bookComment", bookfromDao.getBookComment(Long.parseLong(orderItemNO)).getDescription());
+			json.put("result", true);
+			json.put("message", "获取评价成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.put("result", false);
+			json.put("message", "获取评价失败！");
+		}
+		return json;
+	}
 }

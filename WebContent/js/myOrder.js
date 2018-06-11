@@ -1,4 +1,6 @@
-$(function() {
+$(getAllOrder);
+
+function getAllOrder() {
 	$.post(window.ctx + "/order/getAllOrder", {}, function(json) {
 		console.log(json);
 		if(!json.result) {
@@ -8,31 +10,45 @@ $(function() {
 			return;
 		}
 		
-//		var notSettlementOrderList = [];//待结算订单
-//		var notCommentOrderItemList = [];//待评价书籍
-//		
-//		for (var i in json.orderList) {
-//			var order = json.orderList[i];
-//			
-//			if(order.orderStatus == "未付款"){
-//				notSettlementOrderList.push(order);
-//			}
-//			
-//			for (var i in order.orderItemList) {
-//				var orderItem = order.orderItemList[i];
-//				if(orderItem.commentStatus == false){
-//					notCommentOrderItemList.push(orderItem);
-//				}
-//			}
-//			
-//			
-//		}
-
+		var notSettlementOrderList = [];//待结算订单
+		var notCommentOrderList = [];//待评价订单
+		
+		for (var i in json.orderList) {
+			var flag = false;	//表示当前订单下是否有未评价书籍
+			var order = json.orderList[i];
+			
+			if(order.orderStatus == "未付款"){//未付款的订单
+				notSettlementOrderList.push(order);
+			}else{//已付款的订单
+				for (var i in order.orderItemList) {//遍历订单下所有项目，发现有未评价的则添加
+					var orderItem = order.orderItemList[i];
+					if(orderItem.commentStatus == false){
+						
+						if (!flag) {
+							var orderTemp = JSON.parse(JSON.stringify(order));//变相深拷贝这个订单对象
+							orderTemp.orderItemList = [];//把订单下所有项目设置为空
+							notCommentOrderList.push(orderTemp);	
+							flag = true;
+						}
+						
+						notCommentOrderList[notCommentOrderList.length - 1].orderItemList.push(orderItem);
+					}
+				}
+			}
+			
+			
+			
+			
+		}
+		
+		console.log(notCommentOrderList);
+		$("#notSettlementOrderList").html(createOrderList(notSettlementOrderList));
+		$("#notCommentOrderList").html(createOrderList(notCommentOrderList));
 		$("#allOrderList").html(createOrderList(json.orderList));
 		
 
-	});
-});
+	},"json");
+}
 
 function createOrderList(orderList){
 	var orderListHtml = "";
@@ -46,8 +62,11 @@ function createOrderList(orderList){
 		orderListHtml += "<div class='th'>" + order.logname + "</div>";
 		orderListHtml += "<div class='th'>" + order.phone + "</div>";
 		orderListHtml += "<div class='th'>" + order.address + "</div>";
-		if (order.orderStatus) {//如果未结算
-			orderListHtml += "<div class='th'><button onClick='settlement(" + order.orderNO + ")'>立即结算</button></div>";
+		orderListHtml += "<div class='th'><span class='price'>￥" + order.sum.toFixed(2) + "</span></div>";
+		if (order.orderStatus == "未付款") {//如果未付款
+			orderListHtml += "<div class='th'><button onClick='settlementOrder(" + order.orderNO + ")'>立即结算</button></div>";
+		}else{
+			orderListHtml += "<div class='th'></div>";
 		}
 		orderListHtml += "</div>";
 		orderListHtml += "</div>";
@@ -59,11 +78,19 @@ function createOrderList(orderList){
 			orderListHtml += "<div class='tbody' id='" + orderItem.itemNO + "'>";
 			orderListHtml += "<div class='tr'>";
 			orderListHtml += "<div class='td'><img class='book-pic' src='" +window.ctx + "/img/bookPic/" + book.bookISBN + book.bookPic + "'/></div>";
-			orderListHtml += "<div class='td'><a href='${ctx}/jsp/showBook?bookISBN=" + book.bookISBN + "' target='_blank'>" + book.bookName + "</a></div>";
-			orderListHtml += "<div class='td'>" + book.bookISBN + "</div>";
-			orderListHtml += "<div class='td'>" + book.bookISBN + "</div>";
-			if (! orderItem.commentStatus) {//如果未结算
-				orderListHtml += "<div class='td'><button onClick='settlement(" + orderItem.orderNO + ")'>立即评价</button></div>";
+			orderListHtml += "<div class='td'><a href='" + window.ctx + "/jsp/showBook?bookISBN=" + book.bookISBN + "' target='_blank'>" + book.bookName + "</a></div>";
+			orderListHtml += "<div class='td'>单价：<span class='price'>￥" + book.bookPrice.toFixed(2) + "</span></div>";
+			orderListHtml += "<div class='td'>数量：" + orderItem.count + "</div>";
+			orderListHtml += "<div class='td'>小计：<span class='price'>￥" + (orderItem.count * book.bookPrice).toFixed(2) + "</span></div>";
+			if (order.orderStatus == "未付款") {//如果未付款
+				orderListHtml += "<div class='td'><button disabled='disabled'>立即评价</button></div>";
+			}else{
+				if(orderItem.commentStatus){//如果已评价
+					orderListHtml += "<div class='td'><button onClick='showComment(" + orderItem.itemNO + ")'>查看评价</button></div>";
+				}else{
+					orderListHtml += "<div class='td'><button onClick='setComment(" + orderItem.itemNO + ")'>立即评价</button></div>";
+				}
+				
 			}
 			orderListHtml += "</div>";
 			orderListHtml += "</div>";
@@ -79,11 +106,67 @@ function createOrderList(orderList){
 	
 	
 }
-function settlement(id){
-	messageBox("结算订单","确定支付吗？",function(){
-		messageBox("结算订单","结算成功!");
+function settlementOrder(orderNO){
+	messageBox("结算订单","确定结算这个订单吗？",function(){
+		$.post(window.ctx + "/order/settlementOrder", {"orderNO":orderNO}, function(json) {
+		console.log(json);
+		
+		messageBox("结算订单", json.message, function() {
+			if(json.result) {
+				window.location.reload();
+			}else{
+				jsonCodeTest(json.code); //根据返回码进行相应操作
+			}
+		});
+
+	},"json");
+		
+		
+		
+		
+		
 		
 	},function(){
 		
 	});
+}
+function setComment(itemNO){//立即评论
+	window.itemNO = itemNO;
+	$("#editCommentPageMask").css("display","block");
+}
+function showComment(itemNO){//显示评论
+	$.post(window.ctx + "/order/getBookComment", {"orderItemNO":itemNO}, function(json) {
+		console.log(json);
+		if(!json.result) {
+			messageBox("我的评论", json.message, function() {
+				jsonCodeTest(json.code); //根据返回码进行相应操作
+			});
+			return;
+		}
+		
+		messageBox("我的评论", json.bookComment);
+		
+		
+	},"json");
+}
+
+function submitComment(){//提交评价
+	var comment = $("#editCommentPageMask textarea").val();
+	console.log(comment,window.itemNO);
+	
+	$.post(window.ctx + "/order/submitBookComment", {"orderItemNO":window.itemNO,"comment":comment}, function(json) {
+		console.log(json);
+		messageBox("提交评论", json.message, function() {
+			if(!json.result) {
+				jsonCodeTest(json.code); //根据返回码进行相应操作
+				return;
+			}
+			
+			$("#editCommentPageMask").css("display","none");
+			getAllOrder();//重新获取页面所有数据
+		});
+		
+		
+		
+	},"json");
 }

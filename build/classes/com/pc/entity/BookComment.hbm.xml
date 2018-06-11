@@ -9,6 +9,7 @@
         	<generator class="increment"/>
         </id>
         <many-to-one name="book" column="bookISBN" class="com.pc.entity.Book"/>
+        <many-to-one name="orderItem" column="orderItemNO" class="com.pc.entity.OrderItem" />
         <property name="logname" column="logname" type="string"/>
         <property name="description" column="description" type="string"/>
         <property name="commentDate" column="commentDate" type="timestamp"/>

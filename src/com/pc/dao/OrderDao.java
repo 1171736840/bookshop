@@ -25,6 +25,24 @@ public class OrderDao {
 		Session session = sessionFactory.getCurrentSession();
 		session.save(order);
 	}
+	
+	public Order getOrder(int orderNO) {
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(Order.class, orderNO);
+	}
+	public void updateOrder(Order order) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(order);
+	}
+	public OrderItem getOrderItem(long orderItemNO) {
+		System.out.println(orderItemNO);
+		Session session = sessionFactory.getCurrentSession();
+		return session.get(OrderItem.class, orderItemNO);
+	}
+	public void updateOrderItem(OrderItem OrderItem) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(OrderItem);
+	}
 
 	public List<Order> getAllOrder(User user) {
 		Session session = sessionFactory.getCurrentSession();

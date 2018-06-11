@@ -60,6 +60,7 @@ button:active {
 
 input[type="text"],
 input[type="password"],
+textarea,
 select {
 	width: 200px;
 	height: 36px;
@@ -68,19 +69,31 @@ select {
 	outline: none;
 	border: #CCCCCC solid 1px;
 	transition: all 400ms;
+	/*禁止textarea调整大小*/
+	resize: none;
 }
+
 
 input[type="text"]:focus,
 input[type="password"]:focus,
+textarea:focus,
 select:focus {
 	border-color: #00B7D3;
 }
 
 a{
 	color: #00C1DE;
+	transition: all 400ms;
 }
 a:hover{
 	color: #00B7D3
+}
+
+/*按钮禁止时的样式*/
+button[disabled="disabled"]{
+	background: #FFF;
+	color: #CCC;
+	border-color: #CCC;
 }
 
 /*导航栏*/

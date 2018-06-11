@@ -20,6 +20,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.pc.entity.Book;
 import com.pc.entity.BookComment;
+import com.pc.entity.User;
 import com.pc.util.ProjectCfg;
 
 public class BookfromDao {
@@ -31,6 +32,15 @@ public class BookfromDao {
 		Session session = sessionFactory.getCurrentSession();
 		return session.get(Book.class, bookISBN);
 	}
+	
+	public BookComment getBookComment(long orderItemNO) {
+		Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+		Query<BookComment> query = session.createQuery("from BookComment where orderItemNO=:orderItemNO");
+		query.setParameter("orderItemNO", orderItemNO);
+		return query.uniqueResult();
+	}
+	
 	public Map<String, Object> getBookComment(String bookISBN, int thisPageNumber) {
 		Session session = sessionFactory.getCurrentSession();
 		Map<String, Object> rst = new HashMap<>();
@@ -162,5 +172,19 @@ public class BookfromDao {
 	public void deleteBook(Book book) {//删除图书
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(book);
+	}
+	public void addBookComment(BookComment bookComment) {//保存评论
+		System.out.println("开始插入评论-------------------------");
+		Session session = sessionFactory.getCurrentSession();
+		session.save(bookComment);
+		System.out.println("结束插入评论-------------------------");
+//		System.out.println(bookComment.getCommentNO());
+//		System.out.println(bookComment.getDescription());
+//		System.out.println(bookComment.getLogname());
+//		System.out.println(bookComment.getBook().getBookISBN());
+//		System.out.println(bookComment.getCommentDate());
+//		System.out.println(bookComment.getOrderItem());
+		
+		
 	}
 }

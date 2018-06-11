@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,15 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pc.dao.BookfromDao;
+import com.pc.dao.OrderDao;
 import com.pc.entity.Book;
 import com.pc.entity.BookComment;
+import com.pc.entity.Order;
 
 @Controller
 public class BookController {
 	private static Log log = LogFactory.getLog(BookController.class);//加载日志记录
 	@Autowired
 	private BookfromDao bookfromDao;//根据配置文件定义，运行时会自动获取bookfromDao的实列
-	
 	
 	@ResponseBody//解析出json
 	@RequestMapping(value="/showAllBook", method=RequestMethod.POST)
@@ -98,6 +100,5 @@ public class BookController {
 		
 		return json;
 	}
-	
-	
+
 }

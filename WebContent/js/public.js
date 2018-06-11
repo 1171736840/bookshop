@@ -56,6 +56,7 @@ function messageBox(title, message, confirmFun, cancelFun) { //弹出一个消�
 
 }
 
+
 function jsonCodeTest(code) { //检测执行json的code对应的操作
 	switch(code) {
 		case 100: //表示用户未登录，打开登录框

@@ -2,13 +2,26 @@ package com.pc.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(value= {"order","hibernateLazyInitializer","handler"})	//json转换时忽略这些成员,后面两个是bibernate处理懒加载是自动添加的
 public class BookComment {
 	private long commentNO;
 	private Book book;
 	private String logname;
 	private String description;
 	private Date commentDate;
+	private OrderItem orderItem;
 	
+	
+	public OrderItem getOrderItem() {
+		return orderItem;
+	}
+	@JsonProperty
+	public void setOrderItem(OrderItem orderItem) {
+		this.orderItem = orderItem;
+	}
 	public BookComment(String description, String logname, Date commentDate) {
 		this.description = description;
 		this.logname = logname;
