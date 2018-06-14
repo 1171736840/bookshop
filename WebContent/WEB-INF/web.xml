@@ -50,6 +50,10 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>userFilter</filter-name>
+		<url-pattern>/modifyPassword</url-pattern><!-- 修改密码 -->
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>userFilter</filter-name>
 		<url-pattern>/address/*</url-pattern><!-- 收货地址相关操作 -->
 	</filter-mapping>
 	<filter-mapping>
@@ -63,6 +67,10 @@
 	<filter-mapping>
 		<filter-name>userFilter</filter-name>
 		<url-pattern>/jsp/myOrder</url-pattern><!-- 我的订单页面 -->
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>userFilter</filter-name>
+		<url-pattern>/jsp/home</url-pattern><!-- 个人中心 -->
 	</filter-mapping>
   
   <filter>

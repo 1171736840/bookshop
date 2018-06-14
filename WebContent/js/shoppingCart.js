@@ -6,7 +6,7 @@ function getAllShoppingCart() {
 		var shoppingCart = json.shoppingCart;
 		var shoppingCartPage = $("#shoppingCartPage").css("display", "block");
 		if(shoppingCart == null || shoppingCart.length == 0) { //如果购物车没有物品
-			shoppingCartPage.html("购物车中还没有物品，你可以 <a href='" + window.ctx + "/jsp/showAllBook'>浏览图书</a>");
+			shoppingCartPage.html("购物车中还没有物品，你可以 <a href='" + window.ctx + "/jsp/showAllBook'>浏览图书</a> 。");
 			return;
 		}
 		shoppingCartHtml = "";
@@ -61,16 +61,19 @@ function countPrice() { //计算商品总价
 
 function detele() {
 	var id = this.parentElement.parentElement.id;
-	$.post(window.ctx + "/deleteShoppingCart", {
-		"id": id
-	}, function(json) { //删除购物车中的某件商品
-		console.log(json);
-
-		messageBox("删除商品", json.message, function() {
-			getAllShoppingCart();
+	messageBox("删除商品","确定要删除购物车中的这个商品吗？",function(){
+		
+		$.post(window.ctx + "/deleteShoppingCart", {
+			"id": id
+		}, function(json) { //删除购物车中的某件商品
+			console.log(json);
+	
+			messageBox("删除商品", json.message, function() {
+				getAllShoppingCart();
+			});
+	
 		});
-
-	});
+	},function(){});
 }
 
 function numberButton() {
@@ -141,7 +144,7 @@ function settlement() { //结算
 	});
 	
 	console.log(window.orderIdList);
-	$("#selectAddressMask").css("display","block");
+	
 	$.post(window.ctx + "/address/getAllAddress", {}, function(json) {
 		console.log(json);
 		if(!json.result) {
@@ -168,6 +171,7 @@ function settlement() { //结算
 			addressListHTML += "</div>";
 		}
 		$("#addressListBody").html(addressListHTML);
+		showMask($("#selectAddressMask"));
 	}, "json");
 }
 function selectAddress(){
@@ -177,17 +181,13 @@ function selectAddress(){
 function createOrder(){//创建订单
 	$.post(window.ctx + "/order/createOrder", {"orderIds":window.orderIdList.join(","),"addressId":window.addressId}, function(json) {
 		console.log(json);
-		if(!json.result) {
-			messageBox("创建订单", json.message, function() {
+		messageBox("创建订单", json.message, function() {
+			if(!json.result) {
 				jsonCodeTest(json.code); //根据返回码进行相应操作
-			});
-			return;
-		}else{
-			messageBox("创建订单", json.message, function() {
+			}else{
 				window.location.href = window.ctx + "/jsp/myOrder";
-			});
-		}
-		
+			}
+		});
 		
 		
 	});

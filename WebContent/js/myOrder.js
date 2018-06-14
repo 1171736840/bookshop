@@ -51,6 +51,9 @@ function getAllOrder() {
 }
 
 function createOrderList(orderList){
+	if ((!orderList) || orderList.length == 0) {
+		return "暂时没有订单，你可以 <a href='" + window.ctx + "/jsp/showAllBook'>浏览图书</a> ，或者 <a href='" + window.ctx + "/jsp/shoppingCart'>前往购物车</a> 。";
+	}
 	var orderListHtml = "";
 	
 	for (var i in orderList) {
@@ -132,7 +135,7 @@ function settlementOrder(orderNO){
 }
 function setComment(itemNO){//立即评论
 	window.itemNO = itemNO;
-	$("#editCommentPageMask").css("display","block");
+	showMask($("#editCommentPageMask"));
 }
 function showComment(itemNO){//显示评论
 	$.post(window.ctx + "/order/getBookComment", {"orderItemNO":itemNO}, function(json) {
@@ -152,6 +155,14 @@ function showComment(itemNO){//显示评论
 
 function submitComment(){//提交评价
 	var comment = $("#editCommentPageMask textarea").val();
+	if(comment.length < 10){
+		messageBox("评价字数提示","评价字数不能少于10字。");
+		return;
+	}
+	if(comment.length > 120){
+		messageBox("评价字数提示","评价字数不能多于120字。");
+		return;
+	}
 	console.log(comment,window.itemNO);
 	
 	$.post(window.ctx + "/order/submitBookComment", {"orderItemNO":window.itemNO,"comment":comment}, function(json) {
@@ -162,7 +173,7 @@ function submitComment(){//提交评价
 				return;
 			}
 			
-			$("#editCommentPageMask").css("display","none");
+			noneMask($("#editCommentPageMask"));
 			getAllOrder();//重新获取页面所有数据
 		});
 		

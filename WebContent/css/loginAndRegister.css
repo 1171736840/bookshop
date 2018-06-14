@@ -3,7 +3,7 @@ div.login-register-page {
 	left: 50%;
 	top: 50%;
 	margin-left: -175px;
-	margin-top: -154px;
+	margin-top: -185px;
 	width: 350px;
 	text-align: center;
 	padding-bottom: 25px;
@@ -17,6 +17,15 @@ div.login-register-page div.title {
 	color: #373D41;
 	padding-top: 20px;
 	padding-bottom: 0;
+}
+
+input.pwd-none{
+	/*配合动画效果隐藏*/
+	height: 0px !important; 
+    padding: 0px !important; 
+    margin: 0px !important; 
+    border: 0px !important; 
+    opacity:0 !important; 
 }
 
 div.login-register-page input[type="text"],
@@ -49,3 +58,5 @@ div.login-register-page button.button:hover {
 div.login-register-page button.button:active {
 	background-color: #00B7D3;
 }
+
+

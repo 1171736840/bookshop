@@ -14,12 +14,8 @@ public class UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public void addUser(String logname, String password) {//向数据库中添加用户
-		log.info("注册账号：" + logname + "密码：" + password);
-		
-		User user = new User();
-		user.setLogname(logname);
-		user.setPassword(password);
+	public void addUser(User user) {//向数据库中添加用户
+		log.info("注册账号：" + user.getLogname() + "密码：" + user.getPassword());
 		sessionFactory.getCurrentSession().save(user);
 	}
 	public User getUser(String logname) {
@@ -34,5 +30,8 @@ public class UserDao {
 		query.setParameter("logname", logname);
 		query.setParameter("password", password);
 		return query.uniqueResult();
+	}
+	public void update(User user) {//更新用户
+		sessionFactory.getCurrentSession().update(user);
 	}
 }

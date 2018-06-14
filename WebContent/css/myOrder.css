@@ -54,6 +54,13 @@ div.tbody div.tr {
 	background-color: #F5F5F5;
 	border-top: solid 1px #DDD;
 	transition: all 400ms;
+	
+	
+}
+/*兼容IE9*/
+:root div.tbody div.tr{
+	height: 84px;
+	
 }
 
 div.tbody div.tr:hover {
@@ -70,6 +77,7 @@ div.tbody div.tr div.td {
 
 div.tbody div.tr div.td:nth-child(1) {
 	width: 60px;
+	line-height: normal;
 }
 
 div.tbody div.tr div.td:nth-child(2) {
@@ -91,6 +99,10 @@ div.tbody div.tr div.td:nth-child(5) {
 div.tbody div.tr div.td:nth-child(6) {
 	padding-top: 26px;
 	width: 90px;
+}
+/*兼容IE9*/
+:root div.tbody div.tr div.td:nth-child(6) {
+	line-height: normal;
 }
 
 div.tbody div.tr div.td img.book-pic {

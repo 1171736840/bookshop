@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.mchange.v1.lang.NullUtils;
 import com.pc.dao.UserDao;
 import com.pc.entity.User;
+import com.pc.util.MD5;
 
 @Controller
 public class UserContorller {
@@ -33,20 +32,23 @@ public class UserContorller {
 	
 	@ResponseBody//解析出json
 	@RequestMapping(value="/regist",method=RequestMethod.POST)
-	public Object regist(String logname, String password) {
+	public Object regist(String logname, String password, String password2) {
 		Map<String, Object>json = new HashMap<>();
 //		System.out.println(logname.getBytes().length);
 //		System.out.println(password .length());
-		if(logname == null || "".equals(logname) || password == null || "".equals(password)) {
+		if(logname == null || "".equals(logname) || password == null || "".equals(password) || password2 == null || "".equals(password2)) {
 			json.put("message", "注册失败，用户名或密码不能为空!");
-		}else if(logname.length() > 10){
-			json.put("message", "注册失败，用户名过长!");
-		}else if(password.length() > 10){
-			json.put("message", "注册失败，密码过长!");
+		}else if(logname.length() > 10 || logname.length() < 2){
+			json.put("message", "注册失败，用户名长度必须2-10个字符！");
+		}else if(password.length() > 16 || password.length() < 8){
+			json.put("message", "注册失败，密码长度必须8-16个字符！");
+		}else if(!password.equals(password2)) {
+			json.put("message", "注册失败，两次输入密码不一致！");
 		}else if(userDao.getUser(logname) != null) {
 			json.put("message", "注册失败，用户已存在!");
 		}else {
-			userDao.addUser(logname, password);
+			User user = new User(logname, MD5.getMd5(password));
+			userDao.addUser(user);
 			if(userDao.getUser(logname) == null) {
 				json.put("message", "注册失败，请稍后重试！");
 			}else {
@@ -71,18 +73,23 @@ public class UserContorller {
 		}else {
 			User user;
 			try {
-				user = userDao.getUser(logname,password);
+				user = userDao.getUser(logname);
 				if(user == null) {
 					json.put("message", "登录失败，用户不存在！");
 				}else {
-					session.setAttribute("user", user);
-					json.put("message", "登录成功！");
-					Map<String, String> u = new HashMap<>();
-					u.put("logname", user.getLogname());
-					u.put("photo", user.getPhoto());
-					json.put("user", u);
-					json.put("photoSrc", request.getContextPath() + "/img/photo/");
-					json.put("result", true);
+					if(!user.getPassword().equals(MD5.getMd5(password))) {
+						json.put("message", "登录失败，用户名或密码！");
+					}else {
+						session.setAttribute("user", user);
+						json.put("message", "登录成功！");
+						Map<String, String> u = new HashMap<>();
+						u.put("logname", user.getLogname());
+						u.put("photo", user.getPhoto());
+						json.put("user", u);
+						json.put("photoSrc", request.getContextPath() + "/img/photo/");
+						json.put("result", true);
+					}
+					
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -103,6 +110,56 @@ public class UserContorller {
 		json.put("result", true);
 		return json;
 	}
+	@ResponseBody//解析出json
+	@RequestMapping(value="/modifyPassword")//修改密码
+	public Object modifyPassword(HttpSession session, String oldPassword, String newPassword, String newPassword2) {
+		Map<String, Object>json = new HashMap<>();
+		
+		try {
+			User user = (User)session.getAttribute("user");
+			
+			if ("".equals(oldPassword)) {
+				json.put("message", "老密码不能为空！");
+				json.put("result", false);
+			}else if ("".equals(newPassword)) {
+				json.put("message", "新密码不能为空！");
+				json.put("result", false);
+			}else if ("".equals(newPassword2)) {
+				json.put("message", "再次输入的新密码不能为空！");
+				json.put("result", false);
+			}else if (oldPassword.length() > 16 || oldPassword.length() < 8) {
+				json.put("message", "老密码长度必须8-16个字符！");
+				json.put("result", false);
+			}else if (newPassword.length() > 16 || newPassword.length() < 8) {
+				json.put("message", "新密码长度必须8-16个字符！");
+				json.put("result", false);
+			}else if (newPassword2.length() > 16 || newPassword2.length() < 8) {
+				json.put("message", "再次输入的新密码长度必须8-16个字符！");
+				json.put("result", false);
+			}else if (oldPassword.equals(newPassword)) {
+				json.put("message", "新老密码不能相同！");
+				json.put("result", false);
+			}else if (!newPassword2.equals(newPassword)) {
+				json.put("message", "两次输入的新密码不相同！");
+				json.put("result", false);
+			}else {
+				user.setPassword(MD5.getMd5(newPassword));
+				userDao.update(user);
+				logout(session);
+				json.put("message", "修改密码成功！");
+				json.put("result", true);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.put("message", "修改密码失败！");
+			json.put("result", false);
+		}
+		return json;
+	}
+	
+	
+	
 	
 	@ResponseBody//解析出json
 	@RequestMapping(value="/notLogin")//用于过滤器跳转，显示用户未登录

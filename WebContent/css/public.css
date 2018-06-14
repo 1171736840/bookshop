@@ -22,11 +22,18 @@
 }
 
 body {
-	margin: auto;
-	margin-top: 70px;
-	width: 1000px;
+	margin: 0;
 	overflow-y: scroll;
 	background-color: #F4F5F7;
+	position: relative;
+}
+div.main{
+	margin: auto;
+	/*导航栏高度*/
+	margin-top: 70px;
+	/*页脚高度*/
+	padding-bottom: 180px;
+	width: 1000px;
 }
 
 input[type="submit"],
@@ -37,6 +44,8 @@ button {
 	border: #00C1DE solid 1px;
 	color: #00C1DE;
 	font-size: 14px;
+	/*“\0”为了兼用IE8 9 10所有规定行高*/
+	line-height: 20px\0;
 	outline: none;
 	padding: 4px 10px;
 	transition: all 400ms;
@@ -182,7 +191,76 @@ button[disabled="disabled"]{
 	background-color: #00B7D3
 }
 
+/*页面底部页脚样式*/
+div.footer{
+	width: 100%;
+	height: 170px;
+	background-color: #373D41;
+	position: absolute;
+    bottom: 0px;
+}
+div.footer *{
+	color: #9b9ea0;
+}
+div.footer-main{
+	margin: auto;
+	width: 1000px;
+}
+div.footer-main-page{
+	height: 130px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-left: 40px;
+    padding-right: 40px;
+	border-right: 1px solid #4b5054;
+	float: left;
+	
+}
+div.footer-main-page:first-child{
+	padding-left: 0px;
+}
+div.footer-main-page:last-child{
+	border-right:none;
+	padding-right: 0px;
+}
+div.footer-main-page-item{
+	line-height: 26px;
+	max-width: 370px;
+}
+div.footer-main-page-item a{
+    text-decoration: none;
+    transition: all 400ms;
+}
+div.footer-main-page-item a:hover{
+    color:#00C1DE
+}
 
+/*右侧工具栏*/
+div.tools-box{
+	position: fixed;
+    left: 50%;
+	/*把宽度设置为0,使其不占用屏幕,内容以溢出形式显示*/
+    width: 0;
+    bottom: 190px;
+    z-index: 99;
+}
+div.tools-box-page{
+	margin-left: 520px;
+}
+div.tools-box-page-top{
+	width: 50px;
+	height: 50px;
+	color: #CCC;
+	border: 1px solid #CCC;
+	background-color: #FFF;
+	background-image: url(../img/toTop_01.png);
+	background-size: 100% 100%;
+	transition: all 400ms;
+}
+div.tools-box-page-top:hover{
+	border-color: #00C1DE;
+	background-image: url(../img/toTop_02.png);
+}
 /*消息提示框*/
 
 div.messagebox {
@@ -227,6 +305,7 @@ div.mask {
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.38);
+	display: none;
 }
 
 

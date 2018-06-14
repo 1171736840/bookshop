@@ -8,6 +8,14 @@ public class User {
 	private String photo;
 	private List<Address> addressList;
 	
+	public User() {
+		
+	}
+	public User(String logname, String password) {
+		this.logname = logname;
+		this.password = password;
+	}
+
 	public String getPhoto() {
 		return photo;
 	}

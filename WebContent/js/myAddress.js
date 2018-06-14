@@ -1,4 +1,12 @@
+//解决IE浏览器中没有startsWith函数的问题
+if (typeof String.prototype.startsWith != 'function') {
+	String.prototype.startsWith = function (prefix){
+		return this.slice(0, prefix.length) === prefix;
+	};
+}
+
 $(getAllAddress);
+
 function getAllAddress() {
 
 	$.post(window.ctx + "/address/getAllAddress", {}, function(json) {
@@ -45,14 +53,17 @@ function addAddress() {
 
 	$.post(window.ctx + "/address/addAddress", parameter, function(json) {
 		console.log(json);
-		if(!json.result) {
-			messageBox("收货地址", json.message, function() {
+		
+		messageBox("收货地址", json.message, function() {
+			if(!json.result) {
 				jsonCodeTest(json.code); //根据返回码进行相应操作
-			});
-			return;
-		}
-		getAllAddress(); //重新加载收货地址信息
-		cancelAddAddress();//隐藏添加界面
+				return;
+			}else{
+				getAllAddress(); //重新加载收货地址信息
+				noneMask($("#addAddressMask"));//隐藏添加界面
+				$("#newAddress")[0].reset();//重置表单，这里会重置不干净，因为一些问题市区县区的下拉选择框无法重置
+			}
+		});
 	}, "json");
 }
 
@@ -138,8 +149,7 @@ function showEditAddress() { //显示编辑收货地址页面
 	}
 
 	console.log(pcqp, pcac, pcaa, street, receiver, phone, postcode);
-	$("#editAddressMask").css("display", "block");
-
+	showMask($("#editAddressMask"));
 	var form = $("#editAddress");
 	form.attr("addrNO", id);
 	form.find("input[name=receiver]").val(receiver);
@@ -157,13 +167,8 @@ function cancelEditAddress() { //取消编辑,关闭页面
 }
 
 function showAddAddressPage() { //显示添加收货地址页面
-	$("#addAddressMask").css("display", "block");
+	showMask($("#addAddressMask"));
 	new PCAS("province", "city", "area"); //创建地址选择三级联动，已经有了的相对于重置一些，解决form.reset()无法重置的问题
-}
-
-function cancelAddAddress() { //取消添加,隐藏添加界面
-	$("#addAddressMask").css("display", "none");
-	$("#newAddress")[0].reset();//重置表单，这里会重置不干净，因为一些问题市区县区的下拉选择框无法重置
 }
 
 function formatAddressForm(form) {

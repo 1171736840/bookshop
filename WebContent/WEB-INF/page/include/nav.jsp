@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=utf-8"%>
-<meta charset="utf-8" />
 <div class="nav">
 	<div class="nav-main">
 		<div class="nav-main-page">
@@ -14,7 +13,7 @@
 			<a href="${ctx}/jsp/shoppingCart" target="_blank">购物车</a>
 			<a href="${ctx}/jsp/myAddress" target="_blank">我的地址</a>
 			<a href="${ctx}/jsp/myOrder" target="_blank">我的订单</a>
-			<a href="${ctx}/jsp/modifyPassword" target="_blank">修改密码</a>
+			<a href="${ctx}/jsp/about" target="_blank">关于</a>
 			
 		</div>
 		<div class="nav-main-page" style="float: right;">
@@ -22,11 +21,13 @@
 			<c:choose>
 				<c:when test="${user != null}">
 					<div class="button" id="logoutButton">退出</div>
-					<div class="button">
+					
+					<div class="button" onclick="window.open('${ctx}/jsp/home')">
 						<img class="photo" src="${ctx}/img/photo.jpg">
 						&nbsp;&nbsp;
 						<span id="navLogname">${user.logname}</span>
 					</div>
+					
 					
 				</c:when>
 				<c:otherwise>

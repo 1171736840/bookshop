@@ -58,12 +58,11 @@ div.mask-Address-page {
     left: 50%;
     top: 50%;
     margin-left: -230px;
-    margin-top: -250px;
+    margin-top: -230px;
     width: 460px;
     text-align: center;
     background-color: #FFFFFF;
     border-radius: 5px;
-    padding-bottom: 15px;
 }
 
 div.mask-Address-page div.mask-Address-page-item{

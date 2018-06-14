@@ -7,7 +7,7 @@
 	padding: 10px;
 	background-color: #FFFFFF;
 	border-radius: 10px;
-	float: left;
+	display: inline-block;
 	transition: all 400ms;
 }
 
@@ -96,6 +96,7 @@ a.bookName:hover {
 	color: #FF4400;
 }
 
-.red {
+.red{
 	color: #F00;
 }
+
