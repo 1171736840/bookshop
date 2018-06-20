@@ -28,7 +28,7 @@
 						</td>
 						<td>
 							<div>
-								<h3 id="bookISBN">${param.bookISBN}</h3>
+								<h3 id="bookISBN" bookISBN="${param.bookISBN}">${param.bookISBN}</h3>
 								<h3 id="bookAuthor"></h3>
 								<h3 id="bookPublish"></h3>
 								<h3 id="bookPrice" class="price"></h3>
@@ -39,7 +39,7 @@
 								</div>
 								<br />
 								<button id="purchase" class="purchase">加入购物车</button>
-								<button id="deleteBook" class="purchase">删除图书</button>
+								<button id="deleteBook" class="purchase" style="display: none;">删除图书</button>
 							</div>
 						</td>
 					</tr>

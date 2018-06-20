@@ -45,39 +45,42 @@ window.onload = function() {
 		$("#bookCommentList").html(bookCommentListHTML);
 	},"json");
 	
-}
-$("#bookNumberReduce").on("click",function(){
-	var bookNumber = parseInt($("#bookNumber").text());
-	bookNumber--;
-	if (bookNumber <= 0) {
-		bookNumber = 1;
-	}
-	$("#bookNumber").text(bookNumber);
-});
+	$("#bookNumberReduce").on("click",function(){
+		var bookNumber = parseInt($("#bookNumber").text());
+		bookNumber--;
+		if (bookNumber <= 0) {
+			bookNumber = 1;
+		}
+		$("#bookNumber").text(bookNumber);
+	});
 
-$("#bookNumberAdd").on("click",function(){
-	var bookNumber = parseInt($("#bookNumber").text());
-	bookNumber++;
-	if (bookNumber >= 99) {
-		bookNumber = 99;
-	}
-	$("#bookNumber").text(bookNumber);
-});
-$("#purchase").on("click",function(){
-	var number = $("#bookNumber").text();
-	$.post(window.ctx + "/addShoppingCart",{"bookISBN" : "${param.bookISBN}", "number" : number},function(json){
-		console.log(json);
-		
-		messageBox("添加购物车", json.message, function(){
-			jsonCodeTest(json.code);//根据返回码进行相应操作
-		});
-
-	},"json");
+	$("#bookNumberAdd").on("click",function(){
+		var bookNumber = parseInt($("#bookNumber").text());
+		bookNumber++;
+		if (bookNumber >= 99) {
+			bookNumber = 99;
+		}
+		$("#bookNumber").text(bookNumber);
+	});
+	$("#purchase").on("click",function(){
+		var number = $("#bookNumber").text();
+		var bookISBN = $("#bookISBN").attr("bookISBN");
+		console.log(bookISBN)
+		$.post(window.ctx + "/addShoppingCart",{"bookISBN" : bookISBN, "number" : number},function(json){
+			console.log(json);
+			
+			messageBox("添加购物车", json.message, function(){
+				jsonCodeTest(json.code);//根据返回码进行相应操作
+			});
 	
-});
-$("#deleteBook").on("click",function(){
-	$.post(window.ctx + "/deleteBook",{"bookISBN" : "${param.bookISBN}"},function(json){
-		console.log(json);
-		messageBox("删除图书", json.message);
-	},"json");
-});
+		},"json");
+		
+	});
+	$("#deleteBook").on("click",function(){
+		var bookISBN = $("#bookISBN").attr("bookISBN");
+		$.post(window.ctx + "/deleteBook",{"bookISBN" : bookISBN},function(json){
+			console.log(json);
+			messageBox("删除图书", json.message);
+		},"json");
+	});
+}
