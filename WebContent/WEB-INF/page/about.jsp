@@ -21,7 +21,7 @@
 			<div class="page">
 				<h2 class="page-title">关于本站</h2>
 				<div>
-					这个网上书城小项目是我在课余时间写出来锻炼技术的，前端使用了jQuery框架，后端使用了Java语言，SpringMVC和Hibernate框架，MSSQLServer数据库。
+					这个网上书城小项目是我在课余时间写出来锻炼技术的，前端使用了jQuery框架，后端使用了Java语言，Spring、SpringMVC和Hibernate框架，MSSQLServer数据库。
 					目前在Chrome、Edge、IE9+等浏览器上经过测试正常运行。
 					<br />
 					<br />
@@ -37,7 +37,7 @@
 			<div class="page">
 				<h2 class="page-title">关于我</h2>
 				<div>
-					我的博客：<a href="#" target="_blank">WGG</a>
+					我的博客：<a href="https://www.xuyanwu.cn" target="_blank">WGG</a>
 					<br />
 					<br />
 					我的GitHub地址：<a href="https://github.com/1171736840" target="_blank">1171736840</a>

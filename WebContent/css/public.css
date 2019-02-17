@@ -381,3 +381,14 @@ button.purchase {
 	/*加粗*/
 	color: #EA5151;
 }
+
+div.common-language-list{
+	overflow: auto;
+    height: 322px;
+}
+
+div.common-language-list-item{
+	border-bottom: solid #CCC 1px;
+}
+
+	
